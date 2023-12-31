@@ -1,0 +1,5 @@
+# CONFIG FILE
+# After the exclamation mark (!), provide the path to the folder where the mp3 files will be downloaded
+# Everything after the hashtag (#) is ignored
+# Add links one below the other
+# Empty lines are not allowed
