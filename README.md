@@ -1,8 +1,8 @@
-# YouTube MP3 Downloader
+# YouTube Downloader
 
 ## Description
 
-This Python script allows you to easily download MP3 audio files from YouTube by providing a list of video links in a configuration file (`links.txt`). The script uses the `pytube` library to handle YouTube video processing and the `pathlib` library for file path manipulation.
+This program allows you to easily download Youtube videos in MP3 or MP4 by providing a list of video links in a configuration file (`links.txt`). The script uses the `pytube` library to handle YouTube video processing and the `pathlib` library for file path manipulation.
 
 ## Usage
 

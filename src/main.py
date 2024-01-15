@@ -6,6 +6,7 @@ import os
 current_directory = os.path.dirname(os.path.realpath(sys.argv[0]))
 config_file_path = os.path.join(current_directory, 'links.txt')
 
+
 def remove_char(filename):
     unwanted_chars = "<>/|*\"?'."
     translation_table = str.maketrans("", "", unwanted_chars)
@@ -26,21 +27,27 @@ with open(config_file_path, 'r') as file:
         else:
             links.append(stripped_line)
 
-num = 0
-for i in links:
-    num += 1
-    progres = round(100 / (len(links) / num))
+
+extension = input(str("Download in mp4? (y=mp4,n=mp3) [y/n]: "))
+
+for num, i in enumerate(links, 1):
+    progres = round(100 / len(links) * num)
 
     yt = YouTube(i)
-    file_name = remove_char(yt.title) + '.mp3'
-    full_file_path = os.path.join(destination, file_name)
+    full_file_path = os.path.join(destination, remove_char(yt.title) + '.mp3')
 
     if not Path(full_file_path).is_file():
-        video = yt.streams.filter(only_audio = True).first()
-        out_file = video.download(output_path = destination)
-        base, ext = os.path.splitext(out_file)
-        new_file = base + '.mp3'
-        os.rename(out_file, new_file)
+        out_file = None
+
+        if extension == "y":
+            out_file = yt.streams.filter(progressive = True, file_extension = 'mp4').order_by(
+                'resolution').desc().first().download(output_path = destination)
+        elif extension == "n":
+            out_file = yt.streams.filter(only_audio=True).first().download(output_path=destination)
+            base, ext = os.path.splitext(out_file)
+            new_file = base + '.mp3'
+            os.rename(out_file, new_file)
+
         print(f'{progres}% | Downloaded 🟢 | {yt.title}')
     else:
         print(f'{progres}% | File already exist 🔴 | {yt.title}')
